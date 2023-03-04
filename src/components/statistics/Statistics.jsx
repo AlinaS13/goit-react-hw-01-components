@@ -9,12 +9,12 @@ import {
   Percentage,
 } from './Statistics.styled';
 
-const Statistics = data => {
+const Statistics = ({ title, stats }) => {
   return (
     <StatisticsSection>
-      {data.title && <Title>{data.title}</Title>}
+      {title && <Title>{title}</Title>}
       <StatisticsList>
-        {data.stats.map(item => (
+        {stats.map(item => (
           <StatisticsItem color={getRandomHexColor()} key={item.id}>
             <Label>{item.label} </Label>
             <Percentage>{item.percentage}%</Percentage>
@@ -26,9 +26,14 @@ const Statistics = data => {
 };
 
 Statistics.propTypes = {
-  id: PropTypes.string,
-  label: PropTypes.string,
-  percentage: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  stats: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      percentage: PropTypes.number.isRequired,
+    })
+  ),
 };
 
 export default Statistics;
